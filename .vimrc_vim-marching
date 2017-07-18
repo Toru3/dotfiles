@@ -3,9 +3,9 @@ let g:marching_clang_command = "clang"
 
 " オプションを追加する場合
 let g:marching#clang_command#options = {
-\	"cpp" : "-std=c++17"
-\	"cuda" : "-std=c++11"
-\}
+            \"cpp" : "-std=c++17",
+            \"cuda" : "-std=c++11"
+            \}
 
 
 " インクルードディレクトリのパスを設定
