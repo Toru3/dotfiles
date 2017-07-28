@@ -46,11 +46,6 @@ alias i3x='xrandr --output DP1 --rotate left --left-of eDP1; xrandr --output HDM
 # user file-creation mask
 umask 022
 
-export HISTSIZE=100000
-export HISTCONTROL=ignoreboth
-export HISTIGNORE="history:exit:ssh [A-Za-z0-9]*:ll:w"
-
-
 PS1='\n\[\e[0;36m\]\t \[\e[0;32m\]\u\[\e[1;30m\]@\[\e[1;34m\]\h \[\e[1;33m\]\w\[\e[1;32m\]$(__git_ps1)\[\e[0m\]\n\$ '
 
 if [ -f ~/dotfiles/git-completion.bash ]; then

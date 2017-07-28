@@ -13,7 +13,15 @@ USERNAME=""
 
 export USERNAME BASH_ENV PATH LESSOPEN
 
-OS=`cat /etc/lsb-release | grep DISTRIB_ID | sed 's/.*=//'`
+export HISTSIZE=100000
+export HISTCONTROL=ignoreboth
+export HISTIGNORE="history:exit:ssh [A-Za-z0-9]*:ll:w"
+
+if [ -e /etc/lsb-release ]; then
+    OS=`cat /etc/lsb-release | grep DISTRIB_ID | sed 's/.*=//'`
+else
+    OS='Unknown'
+fi
 if [ $OS = '"Vine"' ]; then
     export PATH=${HOME}/sugar-v2-2-1/bin:${HOME}/usr/local/bin:/usr/local/cuda/bin:$PATH
 else

@@ -16,7 +16,6 @@ if dein#load_state(expand('~/.vim/dein'))
     call dein#add('osyo-manga/vim-marching')
     call dein#add('junegunn/vim-easy-align')
     call dein#add('scrooloose/syntastic.git')
-    call dein#add('fuenor/im_control.vim')
 
     " You can specify revision/branch/tag.
     "call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
@@ -110,7 +109,7 @@ let g:is_chicken=1
 let g:lisp_rainbow=1
 
 function! s:format_file()
-    let l:view = winsaveview()
+    let view = winsaveview()
     normal gg=G
     call winrestview(l:view)
 endfunction
@@ -137,12 +136,12 @@ endif
 execute "set backupdir=".s:backupdir
 unlet s:backupdir
 function! s:UpdateBackupFile()
-    let l:dir = expand(strftime("$HOME/.vim/backup/%Y/%m/%d", localtime()))
+    let dir = expand(strftime("$HOME/.vim/backup/%Y/%m/%d", localtime()))
     if !isdirectory(l:dir)
         let s:retval = system("mkdir -p ".l:dir)
     endif
     execute "set backupdir=".l:dir
-    let l:time = strftime("%H_%M_%S", localtime())
+    let time = strftime("%H_%M_%S", localtime())
     execute "set backupext=.".l:time
 endfunction
 autocmd! BufWritePre,FileWritePre,FileAppendPre * call <SID>UpdateBackupFile()
@@ -155,22 +154,3 @@ endif
 execute "set undodir=".s:undodir
 unlet s:undodir
 
-" 「日本語入力固定モード」切替キー
-inoremap <silent> <C-j> <C-r>=IMState('FixMode')<CR>
-if has("unix")
-    let s:osname = system("grep DISTRIB_ID /etc/lsb-release | sed 's/.*=//'")
-    if s:osname == "\"Vine\"\n"
-        let Vine=1
-        "iBus 1.4
-        "PythonによるIBus制御指定
-        let IM_CtrlIBusPython = 1
-    elseif osname == "Ubuntu\n"
-        let Ubuntu=1
-        "fcitx
-        "「日本語入力固定モード」の動作設定
-        let IM_CtrlMode = 6
-    endif
-endif
-
-" <ESC>押下後のIM切替開始までの反応が遅い場合はttimeoutlenを短く設定してみてください。
-set timeout timeoutlen=3000 ttimeoutlen=100
