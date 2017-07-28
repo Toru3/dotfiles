@@ -111,7 +111,7 @@ let g:lisp_rainbow=1
 function! s:format_file()
     let view = winsaveview()
     normal gg=G
-    call winrestview(l:view)
+    call winrestview(view)
 endfunction
 nnoremap <Space>f :call <SID>format_file()<CR>
 
@@ -137,12 +137,12 @@ execute "set backupdir=".s:backupdir
 unlet s:backupdir
 function! s:UpdateBackupFile()
     let dir = expand(strftime("$HOME/.vim/backup/%Y/%m/%d", localtime()))
-    if !isdirectory(l:dir)
-        let s:retval = system("mkdir -p ".l:dir)
+    if !isdirectory(dir)
+        let s:retval = system("mkdir -p ".dir)
     endif
-    execute "set backupdir=".l:dir
+    execute "set backupdir=".dir
     let time = strftime("%H_%M_%S", localtime())
-    execute "set backupext=.".l:time
+    execute "set backupext=.".time
 endfunction
 autocmd! BufWritePre,FileWritePre,FileAppendPre * call <SID>UpdateBackupFile()
 
