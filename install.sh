@@ -1,5 +1,5 @@
 #!/bin/sh
-set -eu
+set -eux
 umask 0022
 export LC_ALL='C' PATH="$(command -p getconf PATH):$PATH"
 
@@ -16,9 +16,9 @@ done
 
 #vim
 mkdir -p "${HOME}/.vim"
-for dir in colors snippets syntax backup swap undo
+for d in colors snippets syntax backup swap undo
 do
-    mkdir -p "${HOME}/.vim/$dir"
+    mkdir -p "${HOME}/.vim/$d"
 done
 
 for file in `find .vim -type f`
