@@ -39,7 +39,7 @@ function mkcd(){
 #plain vim
 alias pvim='vim -u NONE --noplugin -N'
 
-alias apt-up='sudo apt update; sudo apt upgrade; sudo apt autoremove; sudo apt autoclean'
+alias apt-up='sudo apt update; sudo apt -y autoremove; sudo apt upgrade; sudo apt -y autoremove; sudo apt -y autoclean'
 alias O='xdg-open'
 alias i3x='xrandr --output DP1 --rotate left --left-of eDP1; xrandr --output HDMI1 --rotate right --right-of eDP1'
 
