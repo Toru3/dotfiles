@@ -16,6 +16,8 @@ if dein#load_state(expand('~/.vim/dein'))
     call dein#add('osyo-manga/vim-marching')
     call dein#add('junegunn/vim-easy-align')
     call dein#add('scrooloose/syntastic.git')
+    call dein#add('rust-lang/rust.vim.git')
+    call dein#add('racer-rust/vim-racer.git')
 
     " You can specify revision/branch/tag.
     "call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
@@ -107,6 +109,11 @@ set display=lastline
 let g:tex_conceal=''
 let g:is_chicken=1
 let g:lisp_rainbow=1
+
+"rust
+let g:rustfmt_autosave = 1
+let g:rustfmt_command = $HOME . '/.cargo/bin/rustfmt'
+let g:racer_cmd = $HOME . '/.cargo/bin/racer'
 
 function! s:format_file()
     let view = winsaveview()

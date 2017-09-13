@@ -44,7 +44,7 @@ function apt-up(){
     sudo apt -y autoremove
     sudo apt upgrade
     sudo apt -y autoremove
-    sudo apt autoclean
+    sudo apt -y autoclean
 }
 
 alias O='xdg-open'
