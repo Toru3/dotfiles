@@ -1,4 +1,7 @@
 # .bashrc
+if [ -e "${HOME}/.bash_profile" && "$__BASH_PROPILE_LOADED__" != "1" ]; then
+    source ${HOME}/.bash_profile
+fi
 
 # User specific aliases and functions
 

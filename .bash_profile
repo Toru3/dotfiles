@@ -1,4 +1,5 @@
 # .bash_profile
+export __BASH_PROPILE_LOADED__=1
 
 # Get the aliases and functions
 if [ -f ~/.bashrc ]; then
