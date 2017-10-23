@@ -18,6 +18,7 @@ if dein#load_state(expand('~/.vim/dein'))
     call dein#add('scrooloose/syntastic.git')
     call dein#add('rust-lang/rust.vim.git')
     call dein#add('racer-rust/vim-racer.git')
+    call dein#add('petRUShka/vim-opencl.git')
 
     " You can specify revision/branch/tag.
     "call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
