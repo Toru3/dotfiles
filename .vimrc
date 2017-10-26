@@ -18,6 +18,7 @@ if dein#load_state(expand('~/.vim/dein'))
     call dein#add('scrooloose/syntastic.git')
     call dein#add('rust-lang/rust.vim.git')
     call dein#add('racer-rust/vim-racer.git')
+    call dein#add('petRUShka/vim-opencl.git')
 
     " You can specify revision/branch/tag.
     "call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
@@ -52,7 +53,7 @@ source ${HOME}/.vimrc_vim-marching
 set encoding=utf-8
 scriptencoding utf-8
 set ambiwidth=double
-set fileencodings=cp932,sjis,iso-2022-jp,euc-jp,utf-8
+set fileencodings=utf-8,sjis,iso-2022-jp,euc-jp
 set fileformats=unix,dos,mac
 syntax on
 set foldmethod=syntax
