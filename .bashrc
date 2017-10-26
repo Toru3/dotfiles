@@ -1,5 +1,5 @@
 # .bashrc
-if [ -e "${HOME}/.bash_profile" && "$__BASH_PROPILE_LOADED__" != "1" ]; then
+if [ -e "${HOME}/.bash_profile" -a "$__BASH_PROPILE_LOADED__" != "1" ]; then
     source ${HOME}/.bash_profile
 fi
 
