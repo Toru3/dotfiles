@@ -29,39 +29,22 @@ endif
 
 filetype plugin indent on
 syntax enable
-
-"syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_c_compiler = 'gcc'
-let g:syntastic_c_compiler_options = ' -std=c11 -Wall -Wextra'
-let g:syntastic_cpp_compiler = 'g++'
-let g:syntastic_cpp_compiler_options = ' -std=c++14 -Wall -Wextra'
-let g:syntastic_tex_checkers = []
-let g:syntastic_cuda_checkers = ['gcc -std=c++11 -Wall -Wextra']
-
-source ${HOME}/.vimrc_neocomplete 
-source ${HOME}/.vimrc_neosnippet
-source ${HOME}/.vimrc_vim-marching
-
-"my-setting
 set encoding=utf-8
 scriptencoding utf-8
-set ambiwidth=double
+
+source ${HOME}/.vim/syntastic.vim
+source ${HOME}/.vim/neocomplete.vim
+source ${HOME}/.vim/neosnippet.vim
+source ${HOME}/.vim/vim-marching.vim
+
+"言語
 set fileencodings=utf-8,sjis,iso-2022-jp,euc-jp
 set fileformats=unix,dos,mac
-syntax on
-set foldmethod=syntax
 set spelllang=en,cjk
+set ambiwidth=double
 
 "検索
 set hlsearch
-set ignorecase
 set smartcase
 set wrapscan
 
@@ -77,24 +60,16 @@ set showmatch
 set matchtime=1
 
 "補完
-augroup C_famiry
-    autocmd!
-augroup END
 inoremap {<CR> {}<C-g>U<Left><CR><C-g>U<ESC>O
+
 "移動
 "inoremap () ()<C-g>U<Left>
 "inoremap {} {}<C-g>U<Left>
 "inoremap [] []<C-g>U<Left>
 "inoremap "" ""<C-g>U<Left>
 "inoremap '' ''<C-g>U<Left>
-augroup TeX
-    autocmd!
-    "autocmd FileType tex inoremap $$ $$<C-g>U<Left>
-    "autocmd FileType tex inoremap $$$$ $$$$<C-g>U<Left><C-g>U<Left>
-    "autocmd FileType tex inoremap \{\} \{\}<C-g>U<Left><C-g>U<Left>
-    "autocmd FileType tex inoremap ``'' ``''<C-g>U<Left><C-g>U<Left>
-augroup END
 
+set foldmethod=syntax
 set backspace=indent,eol,start
 set scrolloff=3
 set wildmode=longest:full
@@ -107,7 +82,11 @@ set showcmd
 set title
 set wrap
 set display=lastline
+
+"TeX
 let g:tex_conceal=''
+
+"lisp
 let g:is_chicken=1
 let g:lisp_rainbow=1
 
@@ -126,6 +105,16 @@ nnoremap <Space>f :call <SID>format_file()<CR>
 nnoremap Y y$
 nnoremap <C-i> :set paste<CR>i
 autocmd! InsertLeave * set nopaste
+
+"中クリックでの誤爆防止
+noremap <MiddleMouse> <Nop>
+inoremap <MiddleMouse> <Nop>
+noremap <2-MiddleMouse> <Nop>
+inoremap <2-MiddleMouse> <Nop>
+noremap <3-MiddleMouse> <Nop>
+inoremap <3-MiddleMouse> <Nop>
+noremap <4-MiddleMouse> <Nop>
+inoremap <4-MiddleMouse> <Nop>
 
 "swap, backup, undoファイルを $HOME/.vim/ の下に
 set swapfile
