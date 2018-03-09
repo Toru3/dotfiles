@@ -4,8 +4,8 @@ $latex              = 'platex -shell-escape -halt-on-error';
 $latex_silent       = 'platex -shell-escape -halt-on-error -interaction=batchmode';
 #$bibtex             = 'pbibtex';
 $dvipdf             = 'dvipdfmx %O -o %D %S';
-$dvips              = 'pdvips %O -o %D %S';
-$dvips_landscape    = 'pdvips -tlandscape %O -o %D %S';
+$dvips              = 'dvips %O -o %D %S';
+$dvips_landscape    = 'dvips -tlandscape %O -o %D %S';
 #$makeindex          = 'mendex %O -o %D %S';
 #$pdf_mode           = 0;
 $pdf_mode           = 2; # generates pdf via ps2pdf
