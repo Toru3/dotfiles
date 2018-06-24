@@ -30,6 +30,12 @@ alias lt='\ls --color=auto -Flht'
 function lsd(){
     \ls --color=always -Fl $@ | \grep '^d'
 }
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias cdg='cd $(git rev-parse --show-toplevel)'
 function cdl(){
     cd $@
     ll
@@ -51,7 +57,6 @@ function apt-up(){
 }
 
 alias O='xdg-open'
-alias i3x='xrandr --output DP1 --rotate left --left-of eDP1; xrandr --output HDMI1 --rotate right --right-of eDP1'
 
 # user file-creation mask
 umask 022
