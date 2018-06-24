@@ -16,12 +16,11 @@ if dein#load_state(expand('~/.vim/dein'))
     call dein#add('osyo-manga/vim-marching')
     call dein#add('junegunn/vim-easy-align')
     call dein#add('scrooloose/syntastic.git')
+    " Rust
     call dein#add('rust-lang/rust.vim.git')
     call dein#add('racer-rust/vim-racer.git')
+    " OpenCL
     call dein#add('petRUShka/vim-opencl.git')
-
-    " You can specify revision/branch/tag.
-    "call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
 
     call dein#end()
     call dein#save_state()
@@ -61,13 +60,6 @@ set matchtime=1
 
 "補完
 inoremap {<CR> {}<C-g>U<Left><CR><C-g>U<ESC>O
-
-"移動
-"inoremap () ()<C-g>U<Left>
-"inoremap {} {}<C-g>U<Left>
-"inoremap [] []<C-g>U<Left>
-"inoremap "" ""<C-g>U<Left>
-"inoremap '' ''<C-g>U<Left>
 
 set foldmethod=syntax
 set backspace=indent,eol,start
