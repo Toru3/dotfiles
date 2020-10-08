@@ -1,43 +1,57 @@
-if &compatible
-    set nocompatible
-endif
-set runtimepath^=~/.vim/dein/repos/github.com/Shougo/dein.vim
-
-if dein#load_state(expand('~/.vim/dein'))
-    call dein#begin(expand('~/.vim/dein'))
-
-    call dein#add('Shougo/dein.vim')
-    call dein#add('Shougo/neosnippet.vim')
-    call dein#add('Shougo/neosnippet-snippets')
-    call dein#add('Shougo/neocomplete')
-    call dein#add('Shougo/vimproc.vim', {'build': 'make'})
-    call dein#add('Konfekt/FastFold')
-    call dein#add('osyo-manga/vim-reunions')
-    call dein#add('osyo-manga/vim-marching')
-    call dein#add('junegunn/vim-easy-align')
-    call dein#add('scrooloose/syntastic.git')
-    " Rust
-    call dein#add('rust-lang/rust.vim.git')
-    call dein#add('racer-rust/vim-racer.git')
-    " OpenCL
-    call dein#add('petRUShka/vim-opencl.git')
-
-    call dein#end()
-    call dein#save_state()
-endif
-
-filetype plugin indent on
+call plug#begin('~/.vim/plugged')
+Plug 'Konfekt/FastFold'
+Plug 'junegunn/vim-easy-align'
+" lang
+Plug 'rust-lang/rust.vim'
+Plug 'cespare/vim-toml'
+" LSP & complete
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'prabirshrestha/asyncomplete-neosnippet.vim'
+call plug#end()
 syntax enable
+filetype plugin indent on
 set encoding=utf-8
 scriptencoding utf-8
 
-source ${HOME}/.vim/syntastic.vim
-source ${HOME}/.vim/neocomplete.vim
-source ${HOME}/.vim/neosnippet.vim
-source ${HOME}/.vim/vim-marching.vim
+"vim-lsp
+if executable('pyls')
+    " pip install python-language-server
+    au User lsp_setup call lsp#register_server({
+                \ 'name': 'pyls',
+                \ 'cmd': {server_info->['pyls']},
+                \ 'allowlist': ['python'],
+                \ })
+endif
+
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gr <plug>(lsp-references)
+    nmap <buffer> gi <plug>(lsp-implementation)
+    nmap <buffer> gy <plug>(lsp-type-definition)
+    nmap <buffer> <leader>rn <plug>(lsp-rename)
+    nmap <buffer> [g <Plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]g <Plug>(lsp-next-diagnostic)
+    nmap <buffer> K <plug>(lsp-hover)
+
+    " refer to doc to add more commands
+endfunction
+
+augroup lsp_install
+    autocmd!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
 
 "言語
-set fileencodings=utf-8,sjis,iso-2022-jp,euc-jp
+set fileencodings=utf-8,iso-2022-jp,sjis,cp932,euc-jp
 set fileformats=unix,dos,mac
 set spelllang=en,cjk
 set ambiwidth=double
@@ -50,7 +64,7 @@ set wrapscan
 "タブ・インデント
 set tabstop=8
 set shiftwidth=4
-set softtabstop=4
+set softtabstop=-1
 set expandtab
 set smartindent
 
@@ -65,15 +79,47 @@ set foldmethod=syntax
 set backspace=indent,eol,start
 set scrolloff=3
 set wildmode=longest:full
-set formatoptions+=mM
+set formatoptions+=mMj
 set number
-set ruler
-set laststatus=2
-set cmdheight=2
-set showcmd
 set title
 set wrap
 set display=lastline
+"下の表示
+set laststatus=2
+set statusline=%f%h%m%r%w%q%=[%{&ff},%{&fenc!=''?&fenc:&enc}%Y]\ %-14.(%l,%c%V%)\ %P
+set showcmd
+set cmdheight=2
+
+"C++
+" Don't indent namespace and template
+function! CppNoNamespaceAndTemplateIndent()
+    let l:cline_num = line('.')
+    let l:cline = getline(l:cline_num)
+    let l:pline_num = prevnonblank(l:cline_num - 1)
+    let l:pline = getline(l:pline_num)
+    while l:pline =~# '\(^\s*{\s*\|^\s*//\|^\s*/\*\|\*/\s*$\)'
+        let l:pline_num = prevnonblank(l:pline_num - 1)
+        let l:pline = getline(l:pline_num)
+    endwhile
+    let l:retv = cindent('.')
+    let l:pindent = indent(l:pline_num)
+    if l:pline =~# '^\s*template\s*\s*$'
+        let l:retv = l:pindent
+    elseif l:pline =~# '\s*typename\s*.*,\s*$'
+        let l:retv = l:pindent
+    elseif l:cline =~# '^\s*>\s*$'
+        let l:retv = l:pindent - &shiftwidth
+    elseif l:pline =~# '\s*typename\s*.*>\s*$'
+        let l:retv = l:pindent - &shiftwidth
+    elseif l:pline =~# '^\s*namespace.*'
+        let l:retv = 0
+    endif
+    return l:retv
+endfunction
+augroup cplusplus
+    autocmd!
+    autocmd BufEnter *.{c,cpp,h,hpp,cu,cuh} setlocal indentexpr=CppNoNamespaceAndTemplateIndent()
+augroup END
 
 "TeX
 let g:tex_conceal=''
@@ -83,7 +129,7 @@ let g:is_chicken=1
 let g:lisp_rainbow=1
 
 "rust
-let g:rustfmt_autosave = 1
+let g:rustfmt_autosave = 0
 let g:rustfmt_command = $HOME . '/.cargo/bin/rustfmt'
 let g:racer_cmd = $HOME . '/.cargo/bin/racer'
 
@@ -110,20 +156,9 @@ inoremap <4-MiddleMouse> <Nop>
 
 "swap, backup, undoファイルを $HOME/.vim/ の下に
 set swapfile
-let s:directory = expand("$HOME/.vim/swap")
-if !isdirectory(s:directory)
-    let s:retval = system("mkdir -p ".s:directory)
-endif
-execute "set directory=".s:directory
-unlet s:directory
+set directory=~/.vim/swap
 
 set backup
-let s:backupdir = expand("$HOME/.vim/backup")
-if !isdirectory(s:backupdir)
-    let retval = system("mkdir -p ".s:backupdir)
-endif
-execute "set backupdir=".s:backupdir
-unlet s:backupdir
 function! s:UpdateBackupFile()
     let dir = expand(strftime("$HOME/.vim/backup/%Y/%m/%d", localtime()))
     if !isdirectory(dir)
@@ -136,10 +171,4 @@ endfunction
 autocmd! BufWritePre,FileWritePre,FileAppendPre * call <SID>UpdateBackupFile()
 
 set undofile
-let s:undodir = expand("$HOME/.vim/undo")
-if !isdirectory(s:undodir)
-    let s:retval = system("mkdir -p ".s:undodir)
-endif
-execute "set undodir=".s:undodir
-unlet s:undodir
-
+set undodir=~/.vim/undo

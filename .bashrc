@@ -54,9 +54,11 @@ function apt-up(){
     sudo apt upgrade
     sudo apt -y autoremove
     sudo apt -y autoclean
+    sudo apt update
 }
 
 alias O='xdg-open'
+alias df='df -x squashfs'
 
 # user file-creation mask
 umask 022
@@ -73,4 +75,3 @@ GIT_PS1_SHOWDIRTYSTATE=true
 GIT_PS1_SHOWUNTRACKEDFILES=true
 GIT_PS1_SHOWSTASHSTATE=true
 GIT_PS1_SHOWUPSTREAM=auto
-
